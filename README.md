@@ -1,5 +1,4 @@
 # StoR
 Inventory management system for Appivate
 
-Testy test 1
-Testy test 2
+To boot vite site - go into StoR_Frontend and run npm rundev
