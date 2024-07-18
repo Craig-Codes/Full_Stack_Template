@@ -1,5 +1,20 @@
 services:
 
+  stor_frontend:
+    container_name: stor_frontend
+    build:
+      context: ./StoR_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:5173"
+    volumes:
+      - ./StoR_frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - stor_network
+
   stor_backend:
     container_name: stor_backend
     build:
