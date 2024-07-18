@@ -24,7 +24,9 @@ exec-backend:
 exec-database:
 	docker exec -it database /bin/sh
 
-run-migration: 
-	docker exec -it stor_backend /bin/sh -c 'export DATABASE_URL=${POSTGRES_USER}://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB} && npm run migrate:up'
+backend-npm-install:
+	docker exec stor_backend npm install
 
+run-migration: 
+	docker exec stor_backend npm run migrate up
 
