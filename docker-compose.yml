@@ -1,4 +1,24 @@
 services:
+
+  stor_backend:
+    container_name: stor_backend
+    build:
+      context: ./StoR_backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./StoR_backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - stor_network
   
   database:
     image: postgres:16
