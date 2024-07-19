@@ -11,10 +11,10 @@ export const HomePage = () => {
       try {
         const response = await fetch("http://localhost:3000/equipment");
         const retrieveEquipment = await response.json();
-        setEquipment(retrieveEquipment);
+        setEquipment(retrieveEquipment.equipment); // Make sure to access the 'equipment' key in the response
         console.log(retrieveEquipment);
       } catch {
-        setFetchError("Failed to retieve equipment!");
+        setFetchError("Failed to retrieve equipment!");
       }
     };
     fetchEquipment();
@@ -27,8 +27,17 @@ export const HomePage = () => {
         <Button variant="text">Text</Button>
         <Button variant="contained">Contained</Button>
         <Button variant="outlined">Outlined</Button>
-        <p>{equipment?.message}</p>
       </Stack>
+      {fetchError && <p>{fetchError}</p>}
+      <ul>
+        {equipment ? (
+          equipment.map((item) => (
+            <li key={item.serial_number}>{item.serial_number}</li>
+          ))
+        ) : (
+          <p>Loading equipment...</p>
+        )}
+      </ul>
     </>
   );
 };
