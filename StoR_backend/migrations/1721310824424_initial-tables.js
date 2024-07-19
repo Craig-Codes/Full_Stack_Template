@@ -67,7 +67,7 @@ exports.up = (pgm) => {
           notNull:true,
         },
         location_id: { 
-          type: 'integar',
+          type: 'integer',
           notNull:true,
           references: 'location(id)'
         },
@@ -107,7 +107,7 @@ exports.up = (pgm) => {
       });
 
 
-    pgm.createTable('user', {
+    pgm.createTable('customer', {
       id: 'id',
       username: { 
         type: 'varchar(50)',
@@ -132,7 +132,7 @@ exports.up = (pgm) => {
       },
       staff_number:{
         type: 'varchar(30)',
-        unique: true,
+        unique:true,
         notNull:false
       },
       is_owner:{
@@ -161,7 +161,7 @@ exports.up = (pgm) => {
       owner: {
         type: 'integer',
         notNull:true,
-        references: 'user(id)'
+        references: 'customer(id)'
       },
       unit:{
         type: 'integer',
@@ -182,10 +182,11 @@ exports.up = (pgm) => {
         notNull:false
       },
       assigned_to:{
-        type: 'date',
+        type: 'integer',
         notNull:false,
-        references: 'user(id)'
+        references: 'customer(id)'
       },
+
       task_id:{
         type: 'integer',
         notNull:false,
@@ -193,24 +194,6 @@ exports.up = (pgm) => {
       }
 
     });
-
-
-    // pgm.createTable('grade', {
-    //   id: 'id',
-    //   grade_name: { 
-    //     type: 'varchar(50)',
-    //     unique:true,
-    //     notNull:true,
-    //   }
-    // })
-
-    // pgm.addColumn('user', {
-    //   grade: {
-    //     type: 'integer',
-    //     references: 'grade(id)',
-    //     notNull: true
-    //   }
-    // });
 
     pgm.sql(`
     INSERT INTO grade (grade_name) VALUES 
@@ -224,7 +207,7 @@ exports.up = (pgm) => {
     ('Flt Lt');`);
 
   pgm.sql(`
-    INSERT INTO "user" (username, email, password, is_authenticated, is_service, staff_number, is_owner, grade) VALUES 
+    INSERT INTO "customer" (username, email, password, is_authenticated, is_service, staff_number, is_owner, grade) VALUES 
     ('Keiran', 'user1@example.com', 'password1', true, true, '30317584', false, 3),
     ('Craig', 'user2@example.com', 'password2', false, true, '30159359', true, 4),
     ('Tom', 'user3@example.com', 'password3', true, true, 'staff3', false, 8);

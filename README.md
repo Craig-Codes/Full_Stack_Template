@@ -11,5 +11,5 @@ To boot vite site - go into StoR_Frontend and run npm rundev
 
 ## SQL Query
 SELECT *
-FROM public."user"
-INNER JOIN grade ON public."user".grade=grade.id;
+FROM public."customer"
+INNER JOIN grade ON public."customer".grade=grade.id;
