@@ -1,8 +1,17 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
+
 
 export const HomePage = () => {
-    console.log('test')
+
+    const [equipment, setEquipment] = useState()
+
+    useEffect(() => {
+      console.log('test')
+    },[])
+
+    
     return (
     <>
     <h2>Hi, I am a Home Page!</h2>

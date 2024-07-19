@@ -222,94 +222,107 @@ exports.up = (pgm) => {
     ('Grace', 'user10@example.com', 'password10', true, true, 'staff10', false, 3);
   `);
 
-  //status
-  pgm.sql(`
-  INSERT INTO status (status_name) VALUES 
-  ('Available'),
-  ('Unavailable'),
-  ('U/S'),
-  ('Decommissioned'),
-  ('Reserved'),
-  ('Allocated'),
-  ('Operational'),
-  ('Non-Operational');
-`);
+    //status
+    pgm.sql(`
+    INSERT INTO status (status_name) VALUES 
+    ('Available'),
+    ('U/S'),
+    ('Maintenance'),
+    ('Lost'),
+    ('Decommissioned'),
+    ('Reserved'),
+    ('Allocated');
+    `);
 
-//equipment type
-pgm.sql(`
-INSERT INTO equipment_type (type_name) VALUES 
-('Computer'),
-('Radio'),
-('Vehicle'),
-('Weapon'),
-('Tool'),
-('Medical'),
-('Uniform'),
-('Communication');
-`);
+    //equipment type
+    pgm.sql(`
+    INSERT INTO equipment_type (type_name) VALUES 
+    ('Laptop'),
+    ('Radio'),
+    ('Chair'),
+    ('Weapon'),
+    ('Tool'),
+    ('Tablet'),
+    ('Keyboard'),
+    ('Tea');
+    `);
 
-//team type
-pgm.sql(`
-INSERT INTO team_type (team_name) VALUES 
-('Alpha'),
-('Bravo'),
-('Charlie'),
-('Delta'),
-('Echo'),
-('Foxtrot'),
-('Golf'),
-('Hotel');
-`);
+    //team type
+    pgm.sql(`
+    INSERT INTO team_type (team_name) VALUES 
+    ('A Flt'),
+    ('B Flt'),
+    ('C Flt'),
+    ('D Flt'),
+    ('1 Section'),
+    ('2 Section'),
+    ('EAW TG'),
+    ('John Smith');
+    `);
 
-pgm.sql(`
-INSERT INTO location (location_name, location_domestic) VALUES 
-('New York', true),
-('Los Angeles', true),
-('Chicago', true),
-('Houston', true),
-('Phoenix', true),
-('London', false),
-('Berlin', false),
-('Tokyo', false);
-`);
+    pgm.sql(`
+    INSERT INTO location (location_name, location_domestic) VALUES 
+    ('Stanta', true),
+    ('RAF Benson', true),
+    ('MoD Corsham', true),
+    ('Senny Bridge', true),
+    ('Oman', false),
+    ('Ramstein', false),
+    ('AMAB', false),
+    ('Area 51', false);
+    `);
 
-pgm.sql(`
-INSERT INTO task (task_name, location_id, return_date) VALUES 
-('Task 1', 1, '2024-12-31'),
-('Task 2', 2, '2024-12-31'),
-('Task 3', 3, '2024-12-31'),
-('Task 4', 4, '2024-12-31'),
-('Task 5', 5, '2024-12-31'),
-('Task 6', 6, '2024-12-31'),
-('Task 7', 7, '2024-12-31'),
-('Task 8', 8, '2024-12-31');
-`);
+    pgm.sql(`
+    INSERT INTO task (task_name, location_id, return_date) VALUES 
+    ('Task 1', 1, '2024-12-31'),
+    ('Task 2', 2, '2024-12-31'),
+    ('Task 3', 3, '2024-12-31'),
+    ('Task 4', 4, '2024-12-31'),
+    ('Task 5', 5, '2024-12-31'),
+    ('Task 6', 6, '2024-12-31'),
+    ('Task 7', 7, '2024-12-31'),
+    ('Task 8', 8, '2024-12-31');
+    `);
 
   // Insert data into the unit table
-  pgm.sql(`
-    INSERT INTO unit (unit_name, unit_loc) VALUES 
-    ('Unit A', 1),
-    ('Unit B', 2),
-    ('Unit C', 3),
-    ('Unit D', 4),
-    ('Unit E', 5),
-    ('Unit F', 6),
-    ('Unit G', 7),
-    ('Unit H', 8);
-  `);
+    pgm.sql(`
+        INSERT INTO unit (unit_name, unit_loc) VALUES 
+        ('Appivate', 1),
+        ('Unit B', 2),
+        ('Unit C', 3),
+        ('Unit D', 4),
+        ('Unit E', 5),
+        ('Unit F', 6),
+        ('Unit G', 7),
+        ('Unit H', 8);
+    `);
 
-  // Insert data into the unit_team_bridge table
-  pgm.sql(`
-    INSERT INTO unit_team_bridge (unit_id, team_id) VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8);
-  `);
+    // Insert data into the unit_team_bridge table
+    pgm.sql(`
+        INSERT INTO unit_team_bridge (unit_id, team_id) VALUES 
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8);
+    `);
+
+    pgm.sql(`
+    INSERT INTO equipment (type_id, serial_number, owner, unit, created, status, return_date, assigned_to, task_id) VALUES 
+    (1, 'SN001', 1, 1, '2024-01-01', 1, '2024-12-31', 2, 1),
+    (2, 'SN002', 2, 2, '2024-02-01', 2, '2024-12-31', 3, 2),
+    (3, 'SN003', 3, 3, '2024-03-01', 3, '2024-12-31', 1, 3),
+    (4, 'SN004', 4, 4, '2024-04-01', 4, '2024-12-31', 2, 4),
+    (5, 'SN005', 5, 5, '2024-05-01', 5, '2024-12-31', 3, 5),
+    (6, 'SN006', 1, 6, '2024-06-01', 6, '2024-12-31', 1, 6),
+    (7, 'SN007', 2, 7, '2024-07-01', 7, '2024-12-31', 2, 7),
+    (8, 'SN008', 3, 8, '2024-08-01', 6, '2024-12-31', 3, 8),
+    (4, 'SN009', 1, 1, '2024-09-01', 1, '2024-12-31', 1, 1),
+    (5, 'SN010', 2, 2, '2024-10-01', 2, '2024-12-31', 2, 2);
+    `);
 };
 
 
