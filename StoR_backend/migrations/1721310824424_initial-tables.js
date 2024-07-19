@@ -38,15 +38,28 @@ exports.up = (pgm) => {
         unique: true,
         notNull:false
       },
-      grade:{
-        type:'varchar(30)'
-      },
       is_owner:{
         type: 'boolean',
         notNull:true
       }
     });
-    //pgm.createIndex('posts', 'userId');
+
+    pgm.createTable('grade', {
+      id: 'id',
+      grade_name: { 
+        type: 'varchar(50)',
+        unique:true,
+        notNull:true,
+      }
+    })//pgm.createIndex('posts', 'userId');
+
+    pgm.addColumn('user', {
+      grade: {
+        type: 'integer',
+        references: 'grade(id)',
+        notNull: true
+      }
+    });
   };
 
 /**
