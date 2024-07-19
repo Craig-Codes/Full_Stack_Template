@@ -11,6 +11,16 @@ exports.shorthands = undefined;
  */
 exports.up = (pgm) => {
 
+
+   pgm.createTable('status', {
+    id: 'id',
+    status_name: { 
+      type: 'varchar(50)',
+      unique:true,
+      notNull:true,
+    }
+  });
+
     pgm.createTable('grade', {
         id: 'id',
         grade_name: { 
@@ -18,7 +28,84 @@ exports.up = (pgm) => {
           unique:true,
           notNull:true,
         }
-      })
+      });
+
+      pgm.createTable('equipment_type', {
+        id: 'id',
+        type_name: { 
+          type: 'varchar(50)',
+          unique:true,
+          notNull:true,
+        }
+      });
+
+      pgm.createTable('team_type', {
+        id: 'id',
+        team_name: { 
+          type: 'varchar(50)',
+          unique:true,
+          notNull:true,
+        }
+      });
+
+      pgm.createTable('location', {
+        id: 'id',
+        location_name: { 
+          type: 'varchar(50)',
+          notNull:true,
+        },
+        location_domestic: { 
+          type: 'boolean',
+          notNull:true,
+        }
+      });
+
+      pgm.createTable('task', {
+        id: 'id',
+        task_name: { 
+          type: 'varchar(50)',
+          notNull:true,
+        },
+        location_id: { 
+          type: 'integar',
+          notNull:true,
+          references: 'location(id)'
+        },
+        return_date: { 
+          type: 'date',
+          notNull:true,
+        },
+      });
+
+      pgm.createTable('unit', {
+        id: 'id',
+        unit_name: { 
+          type: 'varchar(50)',
+          unique:true,
+          notNull:true,
+        },
+        unit_loc: { 
+          type: 'integer',
+          notNull:true,
+          references: 'location(id)'
+        }
+      });
+
+      pgm.createTable('unit_team_bridge', {
+        id: 'id',
+        unit_id: { 
+          type: 'integer',
+          notNull:true,
+          references: 'unit(id)'
+
+        },
+        team_id: { 
+          type: 'integer',
+          notNull:true,
+          references: 'team_type(id)'
+        }
+      });
+
 
     pgm.createTable('user', {
       id: 'id',
@@ -57,6 +144,56 @@ exports.up = (pgm) => {
         references: 'grade(id)'
       }
     });
+
+
+    pgm.createTable('equipment', {
+      id: 'id',
+      type_id: { 
+        type: 'integer',
+        notNull:true,
+        references: 'equipment_type(id)'
+      },
+      serial_number: {
+        type: 'varchar(75)',
+        notNull:true,
+        unique: true
+      },
+      owner: {
+        type: 'integer',
+        notNull:true,
+        references: 'user(id)'
+      },
+      unit:{
+        type: 'integer',
+        notNull:true,
+        references: 'unit(id)'
+      },
+      created:{
+        type: 'date',
+        notNull:true
+      },
+      status:{
+        type: 'integer',
+        notNull:true,
+        references: 'status(id)'
+      },
+      return_date:{
+        type: 'date',
+        notNull:false
+      },
+      assigned_to:{
+        type: 'date',
+        notNull:false,
+        references: 'user(id)'
+      },
+      task_id:{
+        type: 'integer',
+        notNull:false,
+        references: 'task(id)'
+      }
+
+    });
+
 
     // pgm.createTable('grade', {
     //   id: 'id',
