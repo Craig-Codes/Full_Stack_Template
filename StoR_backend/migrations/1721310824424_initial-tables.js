@@ -10,6 +10,16 @@ exports.shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
+
+    pgm.createTable('grade', {
+        id: 'id',
+        grade_name: { 
+          type: 'varchar(50)',
+          unique:true,
+          notNull:true,
+        }
+      })
+
     pgm.createTable('user', {
       id: 'id',
       username: { 
@@ -41,25 +51,47 @@ exports.up = (pgm) => {
       is_owner:{
         type: 'boolean',
         notNull:true
-      }
-    });
-
-    pgm.createTable('grade', {
-      id: 'id',
-      grade_name: { 
-        type: 'varchar(50)',
-        unique:true,
-        notNull:true,
-      }
-    })//pgm.createIndex('posts', 'userId');
-
-    pgm.addColumn('user', {
-      grade: {
+      },
+      grade:{
         type: 'integer',
-        references: 'grade(id)',
-        notNull: true
+        references: 'grade(id)'
       }
     });
+
+    // pgm.createTable('grade', {
+    //   id: 'id',
+    //   grade_name: { 
+    //     type: 'varchar(50)',
+    //     unique:true,
+    //     notNull:true,
+    //   }
+    // })
+
+    // pgm.addColumn('user', {
+    //   grade: {
+    //     type: 'integer',
+    //     references: 'grade(id)',
+    //     notNull: true
+    //   }
+    // });
+
+    pgm.sql(`
+    INSERT INTO grade (grade_name) VALUES 
+    ('AS2'),
+    ('AS1'),
+    ('Cpl'),
+    ('Sgt'),
+    ('FS'),
+    ('Chf Tch'),
+    ('WO'),
+    ('Flt Lt');`);
+
+  pgm.sql(`
+    INSERT INTO "user" (username, email, password, is_authenticated, is_service, staff_number, is_owner, grade) VALUES 
+    ('Keiran', 'user1@example.com', 'password1', true, true, '30317584', false, 3),
+    ('Craig', 'user2@example.com', 'password2', false, true, '30159359', true, 4),
+    ('Tom', 'user3@example.com', 'password3', true, true, 'staff3', false, 8);
+  `);
   };
 
 /**
