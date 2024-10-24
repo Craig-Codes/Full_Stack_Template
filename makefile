@@ -28,7 +28,7 @@ backend-npm-install:
 	docker exec stor_backend npm install
 
 run-migration: 
-	docker exec -e POSTGRES_HOST=database -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password123 -e POSTGRES_DB=carer-db stor_backend npm run migrate up
+	docker exec -e POSTGRES_HOST=database stor_backend npm run migrate up
 
 
 
