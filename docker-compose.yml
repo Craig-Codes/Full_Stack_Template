@@ -7,8 +7,7 @@ services:
     ports:
       - "8080:5173"
     volumes:
-      - ./StoR_frontend:/app
-      - /app/node_modules
+      - frontend:/app
     environment:
       - NODE_ENV=development
     networks:
@@ -24,8 +23,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./StoR_backend:/app
-      - /app/node_modules
+      - backend:/app
     environment:
       - NODE_ENV=development
     depends_on:
@@ -74,5 +72,6 @@ networks:
     driver: bridge
 
 volumes:
-  node_modules: {}
+  frontend:
+  backend:
   postgres_data:
